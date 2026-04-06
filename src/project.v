@@ -318,46 +318,53 @@ module tt_um_ds_missile_command(
   );
 
   // Sprites multiplexor
-  always @(*) begin
-    R_next = 2'b00;
-    G_next = 2'b00;
-    B_next = 2'b11;
-
-    if (!video_active || impacts == 2'b00) begin
-      R_next = 2'b00;
-      G_next = 2'b00;
-      B_next = 2'b00;
+  always @(posedge clk) begin
+    if (!rst_n) begin
+      R_next <= 2'b00;
+      G_next <= 2'b00;
+      B_next <= 2'b00;
     end else begin
-      // explosions
-      for (i = 0; i < EXPLOSION_COUNT; i = i + 1) begin
-        if (explosion_active[i]) begin
-          R_next = explosion_R[i];
-          G_next = explosion_G[i];
-          B_next = explosion_B[i];
+      // default background
+      R_next <= 2'b00;
+      G_next <= 2'b00;
+      B_next <= 2'b11;
+
+      if (!video_active || impacts == 2'b00) begin
+        R_next <= 2'b00;
+        G_next <= 2'b00;
+        B_next <= 2'b00;
+      end else begin
+        // explosions
+        for (i = 0; i < EXPLOSION_COUNT; i = i + 1) begin
+          if (explosion_active[i]) begin
+            R_next <= explosion_R[i];
+            G_next <= explosion_G[i];
+            B_next <= explosion_B[i];
+          end
         end
-      end
 
-      // missiles
-      for (i = 0; i < 3; i = i + 1) begin
-        if (missile_active[i]) begin
-          R_next = missile_R[i];
-          G_next = missile_G[i];
-          B_next = missile_B[i];
+        // missiles
+        for (i = 0; i < 3; i = i + 1) begin
+          if (missile_active[i]) begin
+            R_next <= missile_R[i];
+            G_next <= missile_G[i];
+            B_next <= missile_B[i];
+          end
         end
-      end
 
-      // Fortress
-      if (fortress_active) begin
-        R_next = fortress_R;
-        G_next = fortress_G;
-        B_next = fortress_B;
-      end
+        // fortress
+        if (fortress_active) begin
+          R_next <= fortress_R;
+          G_next <= fortress_G;
+          B_next <= fortress_B;
+        end
 
-      // crosshair on top
-      if (crosshair_active) begin
-        R_next = crosshair_R;
-        G_next = crosshair_G;
-        B_next = crosshair_B;
+        // crosshair on top
+        if (crosshair_active) begin
+          R_next <= crosshair_R;
+          G_next <= crosshair_G;
+          B_next <= crosshair_B;
+        end
       end
     end
   end
