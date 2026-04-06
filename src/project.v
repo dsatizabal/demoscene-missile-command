@@ -36,8 +36,6 @@ module tt_um_ds_missile_command(
 
   reg [1:0] impacts;
 
-  reg [15:0] explosions;
-
   reg [15:0] counter;
   reg crosshair_active;
   reg [1:0] crosshair_R;
@@ -58,6 +56,7 @@ module tt_um_ds_missile_command(
   wire [1:0] explosion_R [0:EXPLOSION_COUNT-1];
   wire [1:0] explosion_G [0:EXPLOSION_COUNT-1];
   wire [1:0] explosion_B [0:EXPLOSION_COUNT-1];
+  reg [EXPLOSION_COUNT-1:0] explosions;
 
   reg inp_a_prev;
   reg fire_pulse;
