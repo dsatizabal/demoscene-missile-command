@@ -60,8 +60,6 @@ module missile (
       flying           <= 1'b0;
       reverse_x        <= 1'b0;
       impact           <= 1'b0;
-      stop_request_r   <= 1'b0;
-      impact_request_r <= 1'b0;
     end else begin
       if (fire && !flying) begin
         init_x         <= initial_x;
@@ -108,10 +106,6 @@ module missile (
           end
         end
       end
-
-      // clear one-shot requests after they are seen in this domain
-      stop_request_r   <= 1'b0;
-      impact_request_r <= 1'b0;
     end
   end
 
@@ -131,6 +125,9 @@ module missile (
       diff_r          <= 16'd0;
       line_hit_r      <= 1'b0;
       collision_hit_r <= 1'b0;
+
+      stop_request_r   <= 1'b0;
+      impact_request_r <= 1'b0;
     end else begin
       active          <= 1'b0;
       R               <= 2'b00;

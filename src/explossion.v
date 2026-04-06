@@ -33,7 +33,6 @@ module explosion (
 
   always @(posedge lines_clk) begin
     if (!rst_n) begin
-      active <= 1'b0;
       frames_counter <= 16'd0;
       counter <= 4'd0;
       direction <= 2'd0;
