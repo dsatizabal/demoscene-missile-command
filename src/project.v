@@ -373,22 +373,6 @@ module tt_um_ds_missile_command(
   assign G = G_next;
   assign B = B_next;
 
-  // Fix separate edges
-  always @(posedge missile_impact[0]) begin
-    impacts <= impacts - 1'b1;
-  end
-  always @(posedge missile_impact[1]) begin
-    impacts <= impacts - 1'b1;
-  end
-  always @(posedge missile_impact[2]) begin
-    impacts <= impacts - 1'b1;
-  end
-  always @(posedge inp_select) begin
-    if (impacts == 2'b00) begin
-      impacts <= 2'b11;
-    end
-  end
-
   always @(posedge hsync) begin
     if (!rst_n) begin
       inp_a_prev         <= 1'b0;
@@ -404,6 +388,16 @@ module tt_um_ds_missile_command(
       crosshair_y <= 240;
       impacts <= 2'b11;
     end else begin
+      // Game control
+    if(missile_impact[0] || missile_impact[1] || missile_impact[2]) begin
+      impacts <= impacts - 1'b1;
+    end
+    if (inp_select) begin
+      if (impacts == 2'b00) begin
+        impacts <= 2'b11;
+      end
+    end
+
       // Bomb fire pulse
       fire_pulse <= inp_a & ~inp_a_prev;
       inp_a_prev <= inp_a;
