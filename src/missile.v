@@ -31,6 +31,8 @@ module missile (
   reg [15:0] frames_counter;
   reg flying;
   reg reverse_x;
+  reg clk_stop_flying;
+  reg clk_impact_req;
 
   assign in_flight = flying;
 
@@ -55,6 +57,9 @@ module missile (
       reverse_x         <= 1'b0;
       impact            <= 1'b0;
     end else begin
+      if (clk_stop_flying) flying <= 1'b0;
+      if (clk_impact_req)  impact <= 1'b1;
+
       if (fire && !flying) begin
         init_x            <= initial_x;
         current_x         <= initial_x;
@@ -141,23 +146,29 @@ module missile (
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      active <= 1'b0;
-      R      <= 2'b00;
-      G      <= 2'b00;
-      B      <= 2'b00;
+      active          <= 1'b0;
+      R               <= 2'b00;
+      G               <= 2'b00;
+      B               <= 2'b00;
+      clk_stop_flying <= 1'b0;
+      clk_impact_req  <= 1'b0;
     end else begin
       active <= 1'b0;
       R      <= 2'b00;
       G      <= 2'b00;
       B      <= 2'b00;
 
-      if (flying && line_hit && !collision_hit) begin
+      // Clear sticky flags once the missile is no longer flying
+      if (!flying) begin
+        clk_stop_flying <= 1'b0;
+        clk_impact_req  <= 1'b0;
+      end else if (flying && line_hit && !collision_hit) begin
         if ((R_next == 2'b11) && (G_next == 2'b11) && (B_next == 2'b11) && (y >= current_y - coeff_y)) begin
-          flying <= 1'b0;
+          clk_stop_flying <= 1'b1;
         end
         if ((R_next == 2'b01) && (G_next == 2'b01) && (B_next == 2'b01) && (y >= current_y - coeff_y)) begin
-          flying <= 1'b0;
-          impact <= 1'b1;
+          clk_stop_flying <= 1'b1;
+          clk_impact_req  <= 1'b1;
         end
         active <= 1'b1;
         R      <= 2'b11;

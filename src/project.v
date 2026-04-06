@@ -87,7 +87,9 @@ module tt_um_ds_missile_command(
   reg missiles_gone_prev;
   wire missiles_gone;
 
-  reg  [3:0] missile_impact;
+  wire [3:0] missile_impact;
+  reg  [2:0] missile_impact_prev;
+  reg        inp_select_prev;
 
   assign missiles_gone = (missile_flying == 3'b000);
 
@@ -366,40 +368,40 @@ module tt_um_ds_missile_command(
   assign G = G_next;
   assign B = B_next;
 
-  // Fix separate edges
-  always @(posedge missile_impact[0]) begin
-    impacts <= impacts - 1'b1;
-  end
-  always @(posedge missile_impact[1]) begin
-    impacts <= impacts - 1'b1;
-  end
-  always @(posedge missile_impact[2]) begin
-    impacts <= impacts - 1'b1;
-  end
-  always @(posedge inp_select) begin
-    if (impacts == 2'b00) begin
-      impacts <= 2'b11;
-    end
-  end
-
   always @(posedge hsync) begin
     if (!rst_n) begin
-      inp_a_prev         <= 1'b0;
-      fire_pulse         <= 1'b0;
+      inp_a_prev           <= 1'b0;
+      fire_pulse           <= 1'b0;
 
-      missile_fire       <= 3'b000;
-      missile_fire_pulse <= 4'd0;
-      missiles_in_flight <= 2'd1;
-      missiles_gone_prev <= 1'b0; // force first wave after reset
+      missile_fire         <= 3'b000;
+      missile_fire_pulse   <= 4'd0;
+      missiles_in_flight   <= 2'd1;
+      missiles_gone_prev   <= 1'b0; // force first wave after reset
 
-      counter <= 0;
-      crosshair_x <= 320;
-      crosshair_y <= 240;
-      impacts <= 2'b11;
+      counter              <= 0;
+      crosshair_x          <= 320;
+      crosshair_y          <= 240;
+      impacts              <= 2'b11;
+      missile_impact_prev  <= 3'b000;
+      inp_select_prev      <= 1'b0;
     end else begin
       // Bomb fire pulse
       fire_pulse <= inp_a & ~inp_a_prev;
       inp_a_prev <= inp_a;
+
+      // Detect rising edges on missile_impact to decrement fortress health
+      missile_impact_prev <= missile_impact[2:0];
+      if (missile_impact[0] && !missile_impact_prev[0] && impacts != 2'b00)
+        impacts <= impacts - 1'b1;
+      else if (missile_impact[1] && !missile_impact_prev[1] && impacts != 2'b00)
+        impacts <= impacts - 1'b1;
+      else if (missile_impact[2] && !missile_impact_prev[2] && impacts != 2'b00)
+        impacts <= impacts - 1'b1;
+
+      // Reset fortress health on select button press
+      inp_select_prev <= inp_select;
+      if (inp_select && !inp_select_prev && impacts == 2'b00)
+        impacts <= 2'b11;
 
       // Free-running pseudo-random source
       if (missiles_in_flight + 1'b1 == 2'b00) begin

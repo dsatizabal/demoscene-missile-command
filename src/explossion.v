@@ -91,34 +91,26 @@ module explosion (
           frames_counter <= 16'd0;
         end
       end
-    end
-  end
 
-  always @(posedge lines_clk) begin
-    if (!rst_n) begin
-      frames_counter <= 16'd0;
-      counter <= 4'd0;
-      direction <= 2'd0;
-      explode <= 1'b0;
-      exploding <= 1'b0;
-    end else if (explode) begin
-      if (frames_counter + 1'b1 < FRAMES_DELAY) begin
-        frames_counter <= frames_counter + 1'b1;
-      end else begin
-        if (direction[0] == 1'b0) begin
-          if (counter + 1'b1 < SPRITES_COUNT)
-            counter <= counter + 1'b1;
-          else
-            direction <= direction + 1'b1;
+      if (explode) begin
+        if (frames_counter + 1'b1 < FRAMES_DELAY) begin
+          frames_counter <= frames_counter + 1'b1;
         end else begin
-          if (counter - 1'b1 == 0) begin
-            direction <= direction + 1'b1;
-            explode <= 1'b0;
-            exploding <= 1'b0;
+          if (direction[0] == 1'b0) begin
+            if (counter + 1'b1 < SPRITES_COUNT)
+              counter <= counter + 1'b1;
+            else
+              direction <= direction + 1'b1;
+          end else begin
+            if (counter - 1'b1 == 0) begin
+              direction <= direction + 1'b1;
+              explode <= 1'b0;
+              exploding <= 1'b0;
+            end
+            counter <= counter - 1'b1;
           end
-          counter <= counter - 1'b1;
+          frames_counter <= 16'd0;
         end
-        frames_counter <= 16'd0;
       end
     end
   end
