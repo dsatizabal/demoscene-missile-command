@@ -82,8 +82,8 @@ module missile (
         end else begin
           frames_counter <= 16'd0;
 
-          if (current_y + coeff_y < 10'd480) begin
-            current_y <= current_y + coeff_y;
+          if (current_y + {6'b00_0000, coeff_y} < 10'd480) begin
+            current_y <= current_y + {6'b00_0000, coeff_y};
           end else begin
             current_y <= 10'd479;
             flying    <= 1'b0;
@@ -97,8 +97,8 @@ module missile (
               flying    <= 1'b0;
             end
           end else begin
-            if (current_x + coeff_x < 10'd640) begin
-              current_x <= current_x + coeff_x;
+            if (current_x + {6'b00_0000, coeff_x} < 10'd640) begin
+              current_x <= current_x + {6'b00_0000, coeff_x};
             end else begin
               current_x <= 10'd639;
               flying    <= 1'b0;
