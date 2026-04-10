@@ -18,6 +18,10 @@ Expect 10 missiles per level, on each level the missiles speed will increase unt
 
 Ready to defend your homeland? 🪖 GO 🪖
 
+Check out the Claude-generated documentation for technical details [here](implementation.md).
+
+If you're a MS Windows user you can check out the VBA Excel bitmap generator I used for the banners and some sprites [here](./matrices_generator/MatricesGenerator.xlsm).
+
 ## What is Tiny Tapeout?
 
 Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
