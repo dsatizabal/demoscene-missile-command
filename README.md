@@ -8,7 +8,7 @@ The Verilog implementation (well sort of) of the classic [Atari's Missile Comman
 
 <hr />
 
-![preview](./img/image.png)
+<img src="./img/missile_command_preview.gif" width="600" alt="Missile command preview">
 
 Easy and fun to play, checkout the [details and required hardware](./docs/info.md) to get started, then just press start and begin the action!
 
