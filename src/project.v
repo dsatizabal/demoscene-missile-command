@@ -90,10 +90,21 @@ module tt_um_ds_missile_command(
   wire [1:0] missile_G [0:2];
   wire [1:0] missile_B [0:2];
 
-  wire [9:0] starter_x;
-  wire [3:0] starter_coeff_x;
-  wire [3:0] starter_coeff_y;
-  wire       starter_rev_x;
+  wire [9:0] m1_starter_x;
+  wire [3:0] m1_starter_coeff_x;
+  wire [3:0] m1_starter_coeff_y;
+
+  wire [9:0] m22_starter_x;
+  wire [3:0] m22_starter_coeff_x;
+  wire [3:0] m22_starter_coeff_y;
+
+  wire [9:0] m23_starter_x;
+  wire [3:0] m23_starter_coeff_x;
+  wire [3:0] m23_starter_coeff_y;
+
+  wire [9:0] m33_starter_x;
+  wire [3:0] m33_starter_coeff_x;
+  wire [3:0] m33_starter_coeff_y;
 
   reg missiles_gone_prev;
   wire missiles_gone;
@@ -175,7 +186,7 @@ module tt_um_ds_missile_command(
       .pos_y(crosshair_y),
       .fire(fire_pulse),
       .control(explosions),
-      .my_number(16'b0000_0000_0000_0001),
+      .my_number(4'b0001),
       .RGB_color(EXPLOSSION_RGB_COLOR),
       .active(explosion_active[0]),
       .exploding(explosions[0]),
@@ -194,7 +205,7 @@ module tt_um_ds_missile_command(
       .pos_y(crosshair_y),
       .fire(fire_pulse),
       .control(explosions),
-      .my_number(16'b0000_0000_0000_0010),
+      .my_number(4'b0010),
       .RGB_color(EXPLOSSION_RGB_COLOR),
       .active(explosion_active[1]),
       .exploding(explosions[1]),
@@ -213,7 +224,7 @@ module tt_um_ds_missile_command(
       .pos_y(crosshair_y),
       .fire(fire_pulse),
       .control(explosions),
-      .my_number(16'b0000_0000_0000_0100),
+      .my_number(4'b0100),
       .RGB_color(EXPLOSSION_RGB_COLOR),
       .active(explosion_active[2]),
       .exploding(explosions[2]),
@@ -232,7 +243,7 @@ module tt_um_ds_missile_command(
       .pos_y(crosshair_y),
       .fire(fire_pulse),
       .control(explosions),
-      .my_number(16'b0000_0000_0000_1000),
+      .my_number(4'b1000),
       .RGB_color(EXPLOSSION_RGB_COLOR),
       .active(explosion_active[3]),
       .exploding(explosions[3]),
@@ -244,9 +255,18 @@ module tt_um_ds_missile_command(
   missile_starter ms(
     .rst_n(rst_n),
     .clk(clk),
-    .start_x(starter_x),
-    .coefficient_x(starter_coeff_x),
-    .coefficient_y(starter_coeff_y)
+    .m1_start_x(m1_starter_x),
+    .m22_start_x(m22_starter_x),
+    .m23_start_x(m23_starter_x),
+    .m33_start_x(m33_starter_x),
+    .m1_coefficient_x(m1_starter_coeff_x),
+    .m1_coefficient_y(m1_starter_coeff_y),
+    .m22_coefficient_x(m22_starter_coeff_x),
+    .m22_coefficient_y(m22_starter_coeff_y),
+    .m23_coefficient_x(m23_starter_coeff_x),
+    .m23_coefficient_y(m23_starter_coeff_y),
+    .m33_coefficient_x(m33_starter_coeff_x),
+    .m33_coefficient_y(m33_starter_coeff_y)
   );
 
   missile m_0 (
@@ -568,22 +588,27 @@ module tt_um_ds_missile_command(
         start_game_pending <= 1'b0;
 
         missile_fire[0]    <= 1'b1;
-        missile_start_x[0] <= starter_x;
-        missile_coeff_x[0] <= starter_coeff_x;
-        missile_coeff_y[0] <= starter_coeff_y;
+        missile_start_x[0] <= m1_starter_x;
+        missile_coeff_x[0] <= m1_starter_coeff_x;
+        missile_coeff_y[0] <= m1_starter_coeff_y;
 
-        if (missiles_in_flight >= 2'd2) begin
+        if (missiles_in_flight == 2'd2) begin
           missile_fire[1]    <= 1'b1;
-          missile_start_x[1] <= starter_x + 10'd120;
-          missile_coeff_x[1] <= starter_coeff_x;
-          missile_coeff_y[1] <= starter_coeff_y;
+          missile_start_x[1] <= m22_starter_x ;
+          missile_coeff_x[1] <= m22_starter_coeff_x;
+          missile_coeff_y[1] <= m22_starter_coeff_y;
         end
 
         if (missiles_in_flight == 2'd3) begin
+          missile_fire[1]    <= 1'b1;
+          missile_start_x[1] <= m23_starter_x ;
+          missile_coeff_x[1] <= m23_starter_coeff_x;
+          missile_coeff_y[1] <= m23_starter_coeff_y;
+
           missile_fire[2]    <= 1'b1;
-          missile_start_x[2] <= starter_x + 10'd320;
-          missile_coeff_x[2] <= starter_coeff_x;
-          missile_coeff_y[2] <= starter_coeff_y;
+          missile_start_x[2] <= m33_starter_x;
+          missile_coeff_x[2] <= m33_starter_coeff_x;
+          missile_coeff_y[2] <= m33_starter_coeff_y;
         end
       end
 

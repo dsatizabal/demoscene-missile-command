@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/c/repos/demoscene-missile-command/test/**)",
+      "Bash(python -m pytest test.py -v)",
+      "Bash(python3 -m pytest test.py -v)",
+      "Bash(make)",
+      "Bash(iverilog -o /tmp/test_compile /mnt/c/repos/demoscene-missile-command/src/project.v /mnt/c/repos/demoscene-missile-command/src/crosshair.v /mnt/c/repos/demoscene-missile-command/src/explossion.v /mnt/c/repos/demoscene-missile-command/src/fortress.v /mnt/c/repos/demoscene-missile-command/src/gamepad_pmod_decoder.v /mnt/c/repos/demoscene-missile-command/src/gamepad_pmod_driver.v /mnt/c/repos/demoscene-missile-command/src/gamepad_pmod_single.v /mnt/c/repos/demoscene-missile-command/src/hsync_generator.v /mnt/c/repos/demoscene-missile-command/src/missile_starter.v /mnt/c/repos/demoscene-missile-command/src/missile.v /mnt/c/repos/demoscene-missile-command/src/start_banner.v /mnt/c/repos/demoscene-missile-command/src/game_over_banner.v /mnt/c/repos/demoscene-missile-command/src/level_banner.v /mnt/c/repos/demoscene-missile-command/src/random.v)",
+      "Bash(iverilog:*)"
+    ]
+  }
+}

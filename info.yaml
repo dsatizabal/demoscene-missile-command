@@ -29,6 +29,7 @@ project:
     - "level_banner.v"
     - "missile_starter.v"
     - "missile.v"
+    - "random.v"
     - "start_banner.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
