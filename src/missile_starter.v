@@ -80,6 +80,11 @@ module missile_starter(
   end
 
   always @(*) begin
+      m1_coefficient_x = 0;
+      m22_coefficient_x = 0;
+      m23_coefficient_x = 0;
+      m33_coefficient_x = 0;
+
       if (m1_x <= LEFT_LEFT_QUARTER) begin
         m1_coefficient_x = 2;
         m1_coefficient_y = 3;
