@@ -5,14 +5,14 @@ module missile_starter(
   output wire [9:0] m22_start_x,
   output wire [9:0] m23_start_x,
   output wire [9:0] m33_start_x,
-  output reg [3:0] m1_coefficient_x,
-  output reg [3:0] m1_coefficient_y,
-  output reg [3:0] m22_coefficient_x,
-  output reg [3:0] m22_coefficient_y,
-  output reg [3:0] m23_coefficient_x,
-  output reg [3:0] m23_coefficient_y,
-  output reg [3:0] m33_coefficient_x,
-  output reg [3:0] m33_coefficient_y
+  output reg  [3:0] m1_coefficient_x,
+  output reg  [3:0] m1_coefficient_y,
+  output reg  [3:0] m22_coefficient_x,
+  output reg  [3:0] m22_coefficient_y,
+  output reg  [3:0] m23_coefficient_x,
+  output reg  [3:0] m23_coefficient_y,
+  output reg  [3:0] m33_coefficient_x,
+  output reg  [3:0] m33_coefficient_y
 );
   localparam LEFT_LEFT_QUARTER   = 10'd80;
   localparam LEFT_QUARTER        = 10'd160;
@@ -61,7 +61,10 @@ module missile_starter(
         if (next > MID_SCREEN_WIDTH) begin
           m22_x <= next - MID_SCREEN_WIDTH;
         end else begin
-          m22_x <= m22_x + MID_SCREEN_WIDTH;
+          if (m22_x + MID_SCREEN_WIDTH > SCREEN_WIDTH)
+            m22_x <= m22_x + MID_SCREEN_WIDTH - SCREEN_WIDTH;
+          else
+            m22_x <= m22_x + MID_SCREEN_WIDTH;
         end
 
         if (next > 10'd520) begin
@@ -70,9 +73,15 @@ module missile_starter(
         end else begin
           m23_x <= next + 10'd120;
           if (next > 10'd400) begin
-            m33_x <= m33_x - 10'd240;
+            if (m33_x >= 10'd240)
+              m33_x <= m33_x - 10'd240;
+            else
+              m33_x <= 10'd0;
           end else begin
-            m33_x <= m33_x + 10'd240;
+            if (m33_x + 10'd240 > SCREEN_WIDTH)
+              m33_x <= m33_x + 10'd240 - SCREEN_WIDTH;
+            else
+              m33_x <= m33_x + 10'd240;
           end
         end
       end
