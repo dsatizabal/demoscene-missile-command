@@ -89,157 +89,50 @@ module missile_starter(
   end
 
   always @(*) begin
-      m1_coefficient_x = 0;
+      m1_coefficient_x  = 0;
       m22_coefficient_x = 0;
       m23_coefficient_x = 0;
       m33_coefficient_x = 0;
-      m1_coefficient_y = 0;
+      m1_coefficient_y  = 0;
       m22_coefficient_y = 0;
       m23_coefficient_y = 0;
       m33_coefficient_y = 0;
 
-      if (m1_x <= LEFT_LEFT_QUARTER) begin
-        m1_coefficient_x = 2;
-        m1_coefficient_y = 3;
-      end
+      // Missile 1
+      if      (m1_x <= LEFT_LEFT_QUARTER)   begin m1_coefficient_x = 2; m1_coefficient_y = 3; end
+      else if (m1_x <= LEFT_QUARTER)        begin m1_coefficient_x = 1; m1_coefficient_y = 2; end
+      else if (m1_x <= LEFT_RIGHT_QUARTER)  begin m1_coefficient_x = 1; m1_coefficient_y = 3; end
+      else if (m1_x <= RIGHT_LEFT_QUARTER)  begin m1_coefficient_x = 0; m1_coefficient_y = 2; end
+      else if (m1_x <= RIGHT_QUARTER)       begin m1_coefficient_x = 1; m1_coefficient_y = 3; end
+      else if (m1_x <= RIGHT_RIGHT_QUARTER) begin m1_coefficient_x = 1; m1_coefficient_y = 2; end
+      else                                  begin m1_coefficient_x = 2; m1_coefficient_y = 3; end
 
-      if (m1_x > LEFT_LEFT_QUARTER && m1_x <= LEFT_QUARTER) begin
-        m1_coefficient_x = 1;
-        m1_coefficient_y = 2;
-      end
+      // Missile 2 of 2
+      if      (m22_x <= LEFT_LEFT_QUARTER)   begin m22_coefficient_x = 2; m22_coefficient_y = 3; end
+      else if (m22_x <= LEFT_QUARTER)        begin m22_coefficient_x = 1; m22_coefficient_y = 2; end
+      else if (m22_x <= LEFT_RIGHT_QUARTER)  begin m22_coefficient_x = 1; m22_coefficient_y = 3; end
+      else if (m22_x <= RIGHT_LEFT_QUARTER)  begin m22_coefficient_x = 0; m22_coefficient_y = 2; end
+      else if (m22_x <= RIGHT_QUARTER)       begin m22_coefficient_x = 1; m22_coefficient_y = 3; end
+      else if (m22_x <= RIGHT_RIGHT_QUARTER) begin m22_coefficient_x = 1; m22_coefficient_y = 2; end
+      else                                   begin m22_coefficient_x = 2; m22_coefficient_y = 3; end
 
-      if (m1_x > LEFT_QUARTER && m1_x <= LEFT_RIGHT_QUARTER) begin
-        m1_coefficient_x = 1;
-        m1_coefficient_y = 3;
-      end
+      // Missile 2 of 3
+      if      (m23_x <= LEFT_LEFT_QUARTER)   begin m23_coefficient_x = 2; m23_coefficient_y = 3; end
+      else if (m23_x <= LEFT_QUARTER)        begin m23_coefficient_x = 1; m23_coefficient_y = 2; end
+      else if (m23_x <= LEFT_RIGHT_QUARTER)  begin m23_coefficient_x = 1; m23_coefficient_y = 3; end
+      else if (m23_x <= RIGHT_LEFT_QUARTER)  begin m23_coefficient_x = 0; m23_coefficient_y = 2; end
+      else if (m23_x <= RIGHT_QUARTER)       begin m23_coefficient_x = 1; m23_coefficient_y = 3; end
+      else if (m23_x <= RIGHT_RIGHT_QUARTER) begin m23_coefficient_x = 1; m23_coefficient_y = 2; end
+      else                                   begin m23_coefficient_x = 2; m23_coefficient_y = 3; end
 
-      if (m1_x > LEFT_RIGHT_QUARTER && m1_x <= RIGHT_LEFT_QUARTER) begin
-        m1_coefficient_x = 0;
-        m1_coefficient_y = 2;
-      end
-
-      if (m1_x > RIGHT_LEFT_QUARTER && m1_x <= RIGHT_QUARTER) begin
-        m1_coefficient_x = 1;
-        m1_coefficient_y = 3;
-      end
-
-      if (m1_x > RIGHT_QUARTER && m1_x <= RIGHT_RIGHT_QUARTER) begin
-        m1_coefficient_x = 1;
-        m1_coefficient_y = 2;
-      end
-
-      if (m1_x > RIGHT_RIGHT_QUARTER && m1_x <= SCREEN_WIDTH) begin
-        m1_coefficient_x = 2;
-        m1_coefficient_y = 3;
-      end
-
-    // Missile 2 of 2
-      if (m22_x <= LEFT_LEFT_QUARTER) begin
-        m22_coefficient_x = 2;
-        m22_coefficient_y = 3;
-      end
-
-      if (m22_x > LEFT_LEFT_QUARTER && m22_x <= LEFT_QUARTER) begin
-        m22_coefficient_x = 1;
-        m22_coefficient_y = 2;
-      end
-
-      if (m22_x > LEFT_QUARTER && m22_x <= LEFT_RIGHT_QUARTER) begin
-        m22_coefficient_x = 1;
-        m22_coefficient_y = 3;
-      end
-
-      if (m22_x > LEFT_RIGHT_QUARTER && m22_x <= RIGHT_LEFT_QUARTER) begin
-        m22_coefficient_x = 0;
-        m22_coefficient_y = 2;
-      end
-
-      if (m22_x > RIGHT_LEFT_QUARTER && m22_x <= RIGHT_QUARTER) begin
-        m22_coefficient_x = 1;
-        m22_coefficient_y = 3;
-      end
-
-      if (m22_x > RIGHT_QUARTER && m22_x <= RIGHT_RIGHT_QUARTER) begin
-        m22_coefficient_x = 1;
-        m22_coefficient_y = 2;
-      end
-
-      if (m22_x > RIGHT_RIGHT_QUARTER && m22_x <= SCREEN_WIDTH) begin
-        m22_coefficient_x = 2;
-        m22_coefficient_y = 3;
-      end
-
-    // Missile 2 of 3
-      if (m23_x <= LEFT_LEFT_QUARTER) begin
-        m23_coefficient_x = 2;
-        m23_coefficient_y = 3;
-      end
-
-      if (m23_x > LEFT_LEFT_QUARTER && m23_x <= LEFT_QUARTER) begin
-        m23_coefficient_x = 1;
-        m23_coefficient_y = 2;
-      end
-
-      if (m23_x > LEFT_QUARTER && m23_x <= LEFT_RIGHT_QUARTER) begin
-        m23_coefficient_x = 1;
-        m23_coefficient_y = 3;
-      end
-
-      if (m23_x > LEFT_RIGHT_QUARTER && m23_x <= RIGHT_LEFT_QUARTER) begin
-        m23_coefficient_x = 0;
-        m23_coefficient_y = 2;
-      end
-
-      if (m23_x > RIGHT_LEFT_QUARTER && m23_x <= RIGHT_QUARTER) begin
-        m23_coefficient_x = 1;
-        m23_coefficient_y = 3;
-      end
-
-      if (m23_x > RIGHT_QUARTER && m23_x <= RIGHT_RIGHT_QUARTER) begin
-        m23_coefficient_x = 1;
-        m23_coefficient_y = 2;
-      end
-
-      if (m23_x > RIGHT_RIGHT_QUARTER && m23_x <= SCREEN_WIDTH) begin
-        m23_coefficient_x = 2;
-        m23_coefficient_y = 3;
-      end
-
-    // Missile 3 of 3
-      if (m33_x <= LEFT_LEFT_QUARTER) begin
-        m33_coefficient_x = 2;
-        m33_coefficient_y = 3;
-      end
-
-      if (m33_x > LEFT_LEFT_QUARTER && m33_x <= LEFT_QUARTER) begin
-        m33_coefficient_x = 1;
-        m33_coefficient_y = 2;
-      end
-
-      if (m33_x > LEFT_QUARTER && m33_x <= LEFT_RIGHT_QUARTER) begin
-        m33_coefficient_x = 1;
-        m33_coefficient_y = 3;
-      end
-
-      if (m33_x > LEFT_RIGHT_QUARTER && m33_x <= RIGHT_LEFT_QUARTER) begin
-        m33_coefficient_x = 0;
-        m33_coefficient_y = 2;
-      end
-
-      if (m33_x > RIGHT_LEFT_QUARTER && m33_x <= RIGHT_QUARTER) begin
-        m33_coefficient_x = 1;
-        m33_coefficient_y = 3;
-      end
-
-      if (m33_x > RIGHT_QUARTER && m33_x <= RIGHT_RIGHT_QUARTER) begin
-        m33_coefficient_x = 1;
-        m33_coefficient_y = 2;
-      end
-
-      if (m33_x > RIGHT_RIGHT_QUARTER && m33_x <= SCREEN_WIDTH) begin
-        m33_coefficient_x = 2;
-        m33_coefficient_y = 3;
-      end
+      // Missile 3 of 3
+      if      (m33_x <= LEFT_LEFT_QUARTER)   begin m33_coefficient_x = 2; m33_coefficient_y = 3; end
+      else if (m33_x <= LEFT_QUARTER)        begin m33_coefficient_x = 1; m33_coefficient_y = 2; end
+      else if (m33_x <= LEFT_RIGHT_QUARTER)  begin m33_coefficient_x = 1; m33_coefficient_y = 3; end
+      else if (m33_x <= RIGHT_LEFT_QUARTER)  begin m33_coefficient_x = 0; m33_coefficient_y = 2; end
+      else if (m33_x <= RIGHT_QUARTER)       begin m33_coefficient_x = 1; m33_coefficient_y = 3; end
+      else if (m33_x <= RIGHT_RIGHT_QUARTER) begin m33_coefficient_x = 1; m33_coefficient_y = 2; end
+      else                                   begin m33_coefficient_x = 2; m33_coefficient_y = 3; end
   end
 
 

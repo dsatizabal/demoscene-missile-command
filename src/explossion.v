@@ -8,7 +8,7 @@ module explosion (
     input  wire [9:0]   pos_y,
     input  wire         fire,
     input  wire [15:0]  control,
-    input  wire [15:0]  my_number,
+    input  wire [3:0]  my_number,
     input  wire [5:0]   RGB_color,
     output reg          active,
     output reg          exploding,
@@ -23,12 +23,14 @@ module explosion (
   reg [9:0]  my_x;
   reg [9:0]  my_y;
   reg [3:0]  counter;
-  reg [15:0] frames_counter;
+  reg [11:0] frames_counter;
   reg [1:0]  direction;
   reg        explode;
 
-  reg [9:0] dx;
-  reg [9:0] dy;
+  reg [4:0] dx;
+  reg [4:0] dy;
+  wire [9:0] dx_raw = (x >= my_x) ? (x - my_x) : (my_x - x);
+  wire [9:0] dy_raw = (y >= my_y) ? (y - my_y) : (my_y - y);
   reg [5:0] half_size;
   reg [5:0] cut_size;
   reg [5:0] row_limit;
@@ -122,8 +124,8 @@ module explosion (
       R         <= 2'b00;
       G         <= 2'b00;
       B         <= 2'b00;
-      dx        <= 10'd0;
-      dy        <= 10'd0;
+      dx        <= 5'd0;
+      dy        <= 5'd0;
       half_size <= 6'd0;
       cut_size  <= 6'd0;
       row_limit <= 6'd0;
@@ -133,15 +135,8 @@ module explosion (
       G      <= 2'b00;
       B      <= 2'b00;
 
-      if (x >= my_x)
-        dx <= x - my_x;
-      else
-        dx <= my_x - x;
-
-      if (y >= my_y)
-        dy <= y - my_y;
-      else
-        dy <= my_y - y;
+      dx <= |dx_raw[9:5] ? 5'd31 : dx_raw[4:0];
+      dy <= |dy_raw[9:5] ? 5'd31 : dy_raw[4:0];
 
       case (counter)
         4'd0: half_size <= 6'd2;

@@ -15,7 +15,7 @@ module missile (
     input  wire [5:0] RGBColor,
     input  wire [5:0] Explosion_RGBColor,
     input  wire [5:0] Fortress_RGBColor,
-    input  wire [15:0] Lines_Delay,
+    input  wire [9:0] Lines_Delay,
     output reg        active,
     output wire       in_flight,
     output reg        impact,
@@ -31,7 +31,7 @@ module missile (
   reg [9:0] current_y;
   reg [3:0] coeff_x;
   reg [3:0] coeff_y;
-  reg [15:0] frames_counter;
+  reg [9:0] frames_counter;
   reg flying;
   reg reverse_x;
 
