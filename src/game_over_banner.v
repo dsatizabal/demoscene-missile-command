@@ -13,10 +13,10 @@ module game_over_banner (
     output reg [1:0]  B
 );
 
-  localparam [9:0] SPRITE_WIDTH       = 10'd37;
-  localparam [9:0] SPRITE_HEIGHT      = 10'd9;
-  localparam [3:0] PIXEL_WIDTH_SHIFT  = 4'd2;
-  localparam [3:0] PIXEL_HEIGHT_SHIFT = 4'd1;
+  localparam [6:0] SPRITE_WIDTH       = 10'd37;
+  localparam [4:0] SPRITE_HEIGHT      = 10'd9;
+  localparam [2:0] PIXEL_WIDTH_SHIFT  = 4'd2;
+  localparam [2:0] PIXEL_HEIGHT_SHIFT = 4'd1;
 
   reg [9:0] left_x;
   reg [9:0] top_y;

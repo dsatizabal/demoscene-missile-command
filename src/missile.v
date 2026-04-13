@@ -16,6 +16,7 @@ module missile (
     input  wire [5:0] Explosion_RGBColor,
     input  wire [5:0] Fortress_RGBColor,
     input  wire [9:0] Lines_Delay,
+    input  wire       game_over,
     output reg        active,
     output wire       in_flight,
     output reg        impact,
@@ -52,31 +53,41 @@ module missile (
 
   always @(posedge lines_clk or negedge rst_n) begin
     if (!rst_n) begin
-      init_x            <= 10'd0;
-      current_x         <= 10'd0;
-      current_y         <= 10'd0;
-      coeff_x           <= 4'd0;
-      coeff_y           <= 4'd0;
-      frames_counter    <= 16'd0;
-      flying            <= 1'b0;
-      reverse_x         <= 1'b0;
-      impact            <= 1'b0;
+      init_x         <= 10'd0;
+      current_x      <= 10'd0;
+      current_y      <= 10'd0;
+      coeff_x        <= 4'd0;
+      coeff_y        <= 4'd0;
+      frames_counter <= 10'd0;
+      flying         <= 1'b0;
+      reverse_x      <= 1'b0;
+      impact         <= 1'b0;
     end else begin
-      if (fire && !flying) begin
-        init_x            <= initial_x;
-        current_x         <= initial_x > 10'd640 ? initial_x - 10'd640 : initial_x;
-        current_y         <= 10'd0;
-        coeff_x           <= coefficient_x;
-        coeff_y           <= coefficient_y;
-        frames_counter    <= 16'd0;
-        flying            <= 1'b1;
-        impact            <= 1'b0;
-        reverse_x         <= initial_x > 320 ? 1'b1 : 1'b0;
+      if (game_over) begin
+        init_x         <= 10'd0;
+        current_x      <= 10'd0;
+        current_y      <= 10'd0;
+        coeff_x        <= 4'd0;
+        coeff_y        <= 4'd0;
+        frames_counter <= 10'd0;
+        flying         <= 1'b0;
+        reverse_x      <= 1'b0;
+        impact         <= 1'b0;
+      end else if (fire && !flying) begin
+        init_x         <= initial_x;
+        current_x      <= (initial_x > 10'd640) ? (initial_x - 10'd640) : initial_x;
+        current_y      <= 10'd0;
+        coeff_x        <= coefficient_x;
+        coeff_y        <= coefficient_y;
+        frames_counter <= 10'd0;
+        flying         <= 1'b1;
+        impact         <= 1'b0;
+        reverse_x      <= (initial_x > 10'd320);
       end else if (flying) begin
         if (frames_counter + 1'b1 < Lines_Delay) begin
           frames_counter <= frames_counter + 1'b1;
         end else begin
-          frames_counter <= 16'd0;
+          frames_counter <= 10'd0;
 
           if (current_y + coeff_y < 10'd480) begin
             current_y <= current_y + coeff_y;
