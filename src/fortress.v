@@ -23,11 +23,13 @@ module fortress (
       B      <= 2'b00;
     end else begin
       if (remaining_hits > 0) begin
-        if (x >= SCREEN_MID_WIDTH - 3*FORTRESS_BLOCK_MID_WIDTH && x <= SCREEN_MID_WIDTH + 3*FORTRESS_BLOCK_MID_WIDTH) begin
+        if (x >= (SCREEN_MID_WIDTH - FORTRESS_BLOCK_MID_WIDTH - (FORTRESS_BLOCK_MID_WIDTH << 1)) &&
+            x <= (SCREEN_MID_WIDTH + FORTRESS_BLOCK_MID_WIDTH + (FORTRESS_BLOCK_MID_WIDTH << 1))) begin
 
             // Left block
-            if (x >= SCREEN_MID_WIDTH - 3*FORTRESS_BLOCK_MID_WIDTH && x < SCREEN_MID_WIDTH - FORTRESS_BLOCK_MID_WIDTH && remaining_hits == 2'b11) begin
-              if (y >= SCREEN_HEIGHT - 2*FORTRESS_BLOCK_MID_HEIGHT && y <= SCREEN_HEIGHT) begin
+            if (x >= (SCREEN_MID_WIDTH - FORTRESS_BLOCK_MID_WIDTH - (FORTRESS_BLOCK_MID_WIDTH << 1)) &&
+                x < SCREEN_MID_WIDTH - FORTRESS_BLOCK_MID_WIDTH && remaining_hits == 2'b11) begin
+              if (y >= SCREEN_HEIGHT - (FORTRESS_BLOCK_MID_HEIGHT << 1) && y <= SCREEN_HEIGHT) begin
                 active <= 1'b1;
                 R <= RGB_Color[5:4];
                 G <= RGB_Color[3:2];
@@ -40,8 +42,9 @@ module fortress (
             end
 
             // center block
-            if (x >= SCREEN_MID_WIDTH - FORTRESS_BLOCK_MID_WIDTH && x < SCREEN_MID_WIDTH + FORTRESS_BLOCK_MID_WIDTH && remaining_hits >= 2'b01) begin
-              if (y >= SCREEN_HEIGHT - 4*FORTRESS_BLOCK_MID_HEIGHT && y <= SCREEN_HEIGHT) begin
+            if (x >= SCREEN_MID_WIDTH - FORTRESS_BLOCK_MID_WIDTH &&
+                x < SCREEN_MID_WIDTH + FORTRESS_BLOCK_MID_WIDTH && remaining_hits >= 2'b01) begin
+              if (y >= SCREEN_HEIGHT - (FORTRESS_BLOCK_MID_HEIGHT << 2) && y <= SCREEN_HEIGHT) begin
                 active <= 1'b1;
                 R <= RGB_Color[5:4];
                 G <= RGB_Color[3:2];
@@ -52,8 +55,9 @@ module fortress (
             end
 
             // right block
-            if (x >= SCREEN_MID_WIDTH + FORTRESS_BLOCK_MID_WIDTH && x <= SCREEN_MID_WIDTH + 3*FORTRESS_BLOCK_MID_WIDTH && remaining_hits >= 2'b10) begin
-              if (y >= SCREEN_HEIGHT - 2*FORTRESS_BLOCK_MID_HEIGHT && y <= SCREEN_HEIGHT) begin
+            if (x >= SCREEN_MID_WIDTH + FORTRESS_BLOCK_MID_WIDTH &&
+                x <= (SCREEN_MID_WIDTH + FORTRESS_BLOCK_MID_WIDTH + (FORTRESS_BLOCK_MID_WIDTH << 1)) && remaining_hits >= 2'b10) begin
+              if (y >= SCREEN_HEIGHT - (FORTRESS_BLOCK_MID_HEIGHT << 1) && y <= SCREEN_HEIGHT) begin
                 active <= 1'b1;
                 R <= RGB_Color[5:4];
                 G <= RGB_Color[3:2];

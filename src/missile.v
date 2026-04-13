@@ -16,6 +16,7 @@ module missile (
     input  wire [5:0] Explosion_RGBColor,
     input  wire [5:0] Fortress_RGBColor,
     input  wire [9:0] Lines_Delay,
+    input  wire       game_over,
     output reg        active,
     output wire       in_flight,
     output reg        impact,
@@ -51,7 +52,7 @@ module missile (
   reg        impact_request_r;
 
   always @(posedge lines_clk or negedge rst_n) begin
-    if (!rst_n) begin
+    if (!rst_n || game_over) begin
       init_x            <= 10'd0;
       current_x         <= 10'd0;
       current_y         <= 10'd0;

@@ -14,11 +14,11 @@ module level_banner (
     output reg [1:0]  B
 );
 
-  localparam [9:0] SPRITE_WIDTH  = 10'd64;
-  localparam [9:0] SPRITE_HEIGHT = 10'd16;
+  localparam [6:0] SPRITE_WIDTH  = 10'd64;
+  localparam [4:0] SPRITE_HEIGHT = 10'd16;
 
-  localparam [3:0] PIXEL_WIDTH_SHIFT  = 4'd1;
-  localparam [3:0] PIXEL_HEIGHT_SHIFT = 4'd1;
+  localparam [1:0] PIXEL_WIDTH_SHIFT  = 4'd1;
+  localparam [1:0] PIXEL_HEIGHT_SHIFT = 4'd1;
 
   reg [9:0] left_x;
   reg [9:0] top_y;
