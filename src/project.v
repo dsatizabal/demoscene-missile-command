@@ -55,7 +55,7 @@ module tt_um_ds_missile_command(
   reg [7:0] crosshair_lines_delay;
   reg [7:0] explossion_lines_delay;
 
-  localparam MISSILES_PER_LEVEL     = 2;
+  localparam MISSILES_PER_LEVEL     = 12;
   localparam LEVEL_DELAY_STEP       = 25;
   localparam FRAMES_CROSSHAIR_DELAY = 16'h0100;
   localparam EXPLOSION_COUNT        = 4;
