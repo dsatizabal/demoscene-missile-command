@@ -8,7 +8,7 @@ The Verilog implementation (well sort of) of the classic [Atari's Missile Comman
 
 <hr />
 
-<img src="./img/missile_command_demo.gif" width="600" alt="Missile command preview">
+<img src="./img/missile_command_preview.gif" width="600" alt="Missile command preview">
 
 Easy and fun to play, checkout the [details and required hardware](./docs/info.md) to get started, then just press start and begin the action!
 
@@ -16,11 +16,13 @@ You start at level 0 (see top left screen), and will see the enemy throwing miss
 
 Expect at least 12 missiles per level, on each level the missiles speed will increase until crazyness, if you receive 3 impacts to the fortress on the same level you lose, the impacts count will reset on every level change. When you see the GAME OVER banner press start to begin again.
 
-Concentration, agility, determination, bravery, those are the virtues of a true warrior, got what is needed to fight? only those who date will have to honor to win the cup of glory.
+Concentration, agility, determination, bravery, those are the virtues of a true warrior, got what is needed to fight? only those who date will have to honor to win the badge of glory.
 
-<img src="./img/cup.gif" width="600" alt="Missile command cup">
+<img src="./img/badge.jpg" width="600" alt="Missile command cup">
 
-Let's defend the homeland! 🪖 GO GO GO 🪖
+Move soldier and let's defend the homeland! 🪖 GO GO GO 🪖
+
+TODO: Add instructions to run Uri's VGA Playground locally
 
 Check out the Claude-generated documentation for technical details [here](implementation.md).
 

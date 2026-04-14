@@ -55,7 +55,7 @@ module tt_um_ds_missile_command(
   reg [7:0] crosshair_lines_delay;
   reg [7:0] explossion_lines_delay;
 
-  localparam MISSILES_PER_LEVEL     = 4'd2;
+  localparam MISSILES_PER_LEVEL     = 4'd12;
   localparam LEVEL_DELAY_STEP       = 5'd25;
   localparam FRAMES_CROSSHAIR_DELAY = 16'h0100;
   localparam EXPLOSION_COUNT        = 3'd4;
@@ -617,7 +617,7 @@ module tt_um_ds_missile_command(
         level_launches <= 0;
         missile_lines_delay <= missile_lines_delay - LEVEL_DELAY_STEP;
         impacts <= 2'b11;
-        if (level + 1'b1 > 3) begin
+        if (level + 1'b1 > 9) begin
           level <= 0;
           missile_lines_delay <= 8'b1111_1111;
           winner <= 1'b1;
