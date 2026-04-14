@@ -22,11 +22,95 @@ Concentration, agility, determination, bravery, those are the virtues of a true 
 
 Move soldier and let's defend the homeland! 🪖 GO GO GO 🪖
 
-TODO: Add instructions to run Uri's VGA Playground locally
-
 Check out the Claude-generated documentation for technical details [here](implementation.md).
 
 If you're a MS Windows user you can check out the VBA Excel bitmap generator I used for the banners and some sprites [here](./matrices_generator/MatricesGenerator.xlsm).
+
+## Live the adventure locally
+
+[Uri Shake's VGA Playground](https://vga-playground.com/) was used for the implementation and debugg of this project, you can either use it online or more convenientely run it locally
+
+To use it online visit the [VGA Playground](https://vga-playground.com/), enjoy the demos available if you want to, then to add the Missile Command take any of the project.v files in there and paste the contents of the [project.v](./src/project.v), then, note the + sign to add more files (in the same line where the file names show) to any project, just copy create a file for each and every file in the [src](./src/) folder and paste its contents inside it, observe that all files must end with the .v extension
+
+After adding all files you must see the simulation on the top-right corner of the browser window, see that you have access to the IO pints, the sound, gamepad and a reset button.
+
+If you want to run locally to have the changes refreshed right away proceed as follows:
+
+- Clone the VGA Playground GitHub repo from this URL: https://github.com/TinyTapeout/vga-playground
+- You MUST clone the VGA Playground in the same folder of the project unless you know what you're doing, for example, if you have the demoscene-missile-command in the folder /clone/path/demoscene-missile-command after you clone the VGA Playground you also must have the /clone/path/vga-playground
+- Navigate to the cloned folder: /clone/path/vga-playground and run the following commands (you must have nodeJS installed on your machine)
+```bash
+npm i
+npm start
+```
+- At this ppint you must be able to navigate to http://localhost:5137 and see the same VGA Playground you see online
+- Stop the VGA Playground and copy any of the folders in /clone/path/vga-playground/src/examples, and rename it to missile_command.
+- Edit the index.ts file of the missile_command folder and add the following code:
+
+```javascript
+import crosshair_v from '../../../../demoscene-missile-command/src/crosshair.v?raw'
+import explossion_v from '../../../../demoscene-missile-command/src/explossion.v?raw';
+import fortress_v from '../../../../demoscene-missile-command/src/fortress.v?raw';
+import game_over_banner_v from '../../../../demoscene-missile-command/src/game_over_banner.v?raw';
+import gamepad_pmod_decoder_v from '../../../../demoscene-missile-command/src/gamepad_pmod_decoder.v?raw';
+import gamepad_pmod_driver_v from '../../../../demoscene-missile-command/src/gamepad_pmod_driver.v?raw';
+import gamepad_pmod_single_v from '../../../../demoscene-missile-command/src/gamepad_pmod_single.v?raw';
+import hsync_generator_v from '../../../../demoscene-missile-command/src/hsync_generator.v?raw';
+import level_banner_v from '../../../../demoscene-missile-command/src/level_banner.v?raw';
+import missile_starter_v from '../../../../demoscene-missile-command/src/missile_starter.v?raw';
+import missile_v from '../../../../demoscene-missile-command/src/missile.v?raw';
+import project_v from '../../../../demoscene-missile-command/src/project.v?raw';
+import random_v from '../../../../demoscene-missile-command/src/random.v?raw';
+import start_banner_v from '../../../../demoscene-missile-command/src/start_banner.v?raw';
+import winner_banner_v from '../../../../demoscene-missile-command/src/winner_banner.v?raw';
+
+export const MissileCommand = {
+  id: 'missilecommand',
+  name: 'Missile Command',
+  author: 'Diego Satizabal',
+  sources: {
+    'crosshair.v': crosshair_v,
+    'explossion.v': explossion_v,
+    'fortress.v': fortress_v,
+    'game_over_banner.v': game_over_banner_v,
+    'gamepad_pmod_decoder.v': gamepad_pmod_decoder_v,
+    'gamepad_pmod_driver.v': gamepad_pmod_driver_v,
+    'gamepad_pmod_single.v': gamepad_pmod_single_v,
+    'hsync_generator.v': hsync_generator_v,
+    'level_banner.v': level_banner_v,
+    'missile_starter.v': missile_starter_v,
+    'missile.v': missile_v,
+    'project.v': project_v,
+    'random.v': random_v,
+    'start_banner.v': start_banner_v,
+    'winner_banner.v': winner_banner_v
+  },
+};
+
+```
+- Edit the /src/index.ts file as follows:
+```javascript
+import { checkers } from './checkers';
+import { conway } from './conway';
+import { drop } from './drop';
+import { gamepad } from './gamepad';
+import { logo } from './logo';
+import { music } from './music';
+import { Project } from './Project';
+import { rings } from './rings';
+import { stripes } from './stripes';
+import { MissileCommand } from './missile_command';
+
+export const examples: Project[] = [stripes, music, rings, logo, conway, checkers, drop, gamepad, MissileCommand];
+```
+- Again, it's VERY IMPORTANT that you follow the same names for folders, files and objects unless you know what you're doing.
+- Now you must be able to go to the /clone/path/vga-playground folder again and run:
+```bash
+npm start
+```
+and see the Playground with the Missile Command added as a project and run it, and the best part, as you go you'll see the changes reflected to test.
+
+TODO: Add instructions to run the game in TangNano FPGA
 
 ## What is Tiny Tapeout?
 
