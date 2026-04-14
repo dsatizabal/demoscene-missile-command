@@ -36,6 +36,7 @@ module tt_um_ds_missile_command(
 
   reg [3:0] level;
   reg level_up;
+  reg winner;
 
   reg [1:0] impacts;
 
@@ -54,10 +55,10 @@ module tt_um_ds_missile_command(
   reg [7:0] crosshair_lines_delay;
   reg [7:0] explossion_lines_delay;
 
-  localparam MISSILES_PER_LEVEL     = 12;
-  localparam LEVEL_DELAY_STEP       = 25;
+  localparam MISSILES_PER_LEVEL     = 4'd12;
+  localparam LEVEL_DELAY_STEP       = 5'd25;
   localparam FRAMES_CROSSHAIR_DELAY = 16'h0100;
-  localparam EXPLOSION_COUNT        = 4;
+  localparam EXPLOSION_COUNT        = 3'd4;
 
   localparam CROSSHAIR_RGB_COLOR          = 6'b00_1100;
   localparam FORTRESS_RGB_COLOR           = 6'b01_0101;
@@ -141,6 +142,11 @@ module tt_um_ds_missile_command(
   wire [1:0] level_banner_G;
   wire [1:0] level_banner_B;
   wire       level_banner_active;
+
+  wire [1:0] winner_banner_R;
+  wire [1:0] winner_banner_G;
+  wire [1:0] winner_banner_B;
+  wire       winner_banner_active;
 
   reg       start_game_pending;
   reg       game_over;
@@ -364,6 +370,20 @@ module tt_um_ds_missile_command(
       .B(crosshair_B)
   );
 
+  winner_banner win (
+      .rst_n(rst_n),
+      .clk(clk),
+      .x(pix_x),
+      .y(pix_y),
+      .pos_x(320),
+      .pos_y(240),
+      .paint_banner(winner),
+      .active(winner_banner_active),
+      .R(winner_banner_R),
+      .G(winner_banner_G),
+      .B(winner_banner_B)
+  );
+
   start_banner start (
       .rst_n(rst_n),
       .clk(clk),
@@ -433,16 +453,22 @@ module tt_um_ds_missile_command(
       R_next = 2'b00;
       G_next = 2'b00;
       B_next = 2'b00;
-    end else if (impacts == 2'b00) begin
+    end else if ((impacts == 2'b00) || winner) begin
       R_next = 2'b00;
       G_next = 2'b00;
       B_next = 2'b00;
 
-      if (game_over) begin
-        if (game_over_banner_active) begin
+      if (game_over || winner) begin
+        if (game_over_banner_active && game_over) begin
           R_next = game_over_banner_R;
           G_next = game_over_banner_G;
           B_next = game_over_banner_B;
+        end
+
+        if (winner_banner_active && winner) begin
+          R_next = winner_banner_R;
+          G_next = winner_banner_G;
+          B_next = winner_banner_B;
         end
       end else begin
         if (start_banner_active) begin
@@ -522,6 +548,7 @@ module tt_um_ds_missile_command(
 
       level                 <= 4'b0000;
       level_up              <= 0;
+      winner                <= 0;
     end else begin
       impact_pulses =
           ({1'b0, (missile_impact[0] & ~missile_impact_prev[0])}) +
@@ -532,8 +559,9 @@ module tt_um_ds_missile_command(
       inp_a_prev <= inp_a;
 
       if (inp_start & ~inp_start_prev) begin
-        if (game_over) begin
+        if (game_over || winner) begin
           game_over             <= 1'b0;
+          winner                <= 0;
         end else begin
           if (impacts == 2'b00) begin
             impacts               <= 2'b11;
@@ -592,6 +620,8 @@ module tt_um_ds_missile_command(
         if (level + 1'b1 > 9) begin
           level <= 0;
           missile_lines_delay <= 8'b1111_1111;
+          winner <= 1'b1;
+          impacts <= 2'b00;
         end else begin
           level <= level + 1'b1;
         end

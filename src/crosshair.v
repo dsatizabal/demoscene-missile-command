@@ -12,8 +12,8 @@ module crosshair (
     output reg [1:0]  B
 );
 
-  localparam [9:0] SPRITE_WIDTH  = 10;
-  localparam [9:0] SPRITE_HEIGHT = 10;
+  localparam [3:0] SPRITE_WIDTH  = 10;
+  localparam [3:0] SPRITE_HEIGHT = 10;
 
   always @(posedge clk) begin
     if (!rst_n) begin
@@ -82,7 +82,6 @@ module crosshair (
         4'd7: row_bitmap    = 10'b00_0000_0011;
         4'd8: row_bitmap    = 10'b11_1111_1111;
         4'd9: row_bitmap    = 10'b11_1111_1111;
-        default: row_bitmap = 10'b00_0000_0000;
       endcase
 
       crosshair_pixel = row_bitmap[col];

@@ -10,10 +10,10 @@ module fortress (
     output reg [1:0]  G,
     output reg [1:0]  B
 );
-  localparam SCREEN_MID_WIDTH           = 320;
-  localparam SCREEN_HEIGHT              = 480;
-  localparam FORTRESS_BLOCK_MID_WIDTH   = 24;
-  localparam FORTRESS_BLOCK_MID_HEIGHT  = 12;
+  localparam SCREEN_MID_WIDTH           = 10'd320;
+  localparam SCREEN_HEIGHT              = 10'd480;
+  localparam FORTRESS_BLOCK_MID_WIDTH   = 5'd24;
+  localparam FORTRESS_BLOCK_MID_HEIGHT  = 5'd12;
 
   always @(posedge clk) begin
     if (!rst_n) begin

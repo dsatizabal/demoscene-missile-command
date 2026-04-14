@@ -14,9 +14,15 @@ Easy and fun to play, checkout the [details and required hardware](./docs/info.m
 
 You start at level 0 (see top left screen), and will see the enemy throwing missiles waves with 1 to 3 missiles at a time targetting your gray fortress (bottom center) and you have to defend it!, move the green cursor (crosshair) and press A to throw an anti-aereal defense bomb, if the missiles touches it it will get destroyed and you'll be able to pick the wrecks to study their technology XD.
 
-Expect 10 missiles per level, on each level the missiles speed will increase until crazyness, if you receive 3 impacts to the fortress on the same level you lose, the impacts count will reset on every level change. When you see the GAME OVER banner press start to begin again.
+Expect at least 12 missiles per level, on each level the missiles speed will increase until crazyness, if you receive 3 impacts to the fortress on the same level you lose, the impacts count will reset on every level change. When you see the GAME OVER banner press start to begin again.
 
-Ready to defend your homeland? 🪖 GO 🪖
+Concentration, agility, determination, bravery, those are the virtues of a true warrior, got what is needed to fight? only those who date will have to honor to win the badge of glory.
+
+<img src="./img/badge.jpg" width="600" alt="Missile command cup">
+
+Move soldier and let's defend the homeland! 🪖 GO GO GO 🪖
+
+TODO: Add instructions to run Uri's VGA Playground locally
 
 Check out the Claude-generated documentation for technical details [here](implementation.md).
 

@@ -8,7 +8,7 @@ module explosion (
     input  wire [9:0]   pos_y,
     input  wire         fire,
     input  wire [15:0]  control,
-    input  wire [3:0]  my_number,
+    input  wire [3:0]   my_number,
     input  wire [5:0]   RGB_color,
     output reg          active,
     output reg          exploding,
