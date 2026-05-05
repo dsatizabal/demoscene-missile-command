@@ -29,8 +29,8 @@ module tt_um_ds_missile_command(
 
   assign uo_out = {hsync, B[0], G[0], R[0], vsync, B[1], G[1], R[1]};
 
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  assign uio_out = 8'd0;
+  assign uio_oe  = 8'd0;
 
   wire _unused_ok = &{ena, ui_in, uio_in};
 
@@ -55,10 +55,10 @@ module tt_um_ds_missile_command(
   reg [7:0] crosshair_lines_delay;
   reg [7:0] explossion_lines_delay;
 
-  localparam MISSILES_PER_LEVEL     = 4'd12;
-  localparam LEVEL_DELAY_STEP       = 5'd25;
-  localparam FRAMES_CROSSHAIR_DELAY = 16'h0100;
-  localparam EXPLOSION_COUNT        = 3'd4;
+  localparam MISSILES_PER_LEVEL           = 4'd12;
+  localparam LEVEL_DELAY_STEP             = 5'd25;
+  localparam FRAMES_CROSSHAIR_DELAY       = 16'h0100;
+  localparam EXPLOSION_COUNT              = 3'd4;
 
   localparam CROSSHAIR_RGB_COLOR          = 6'b00_1100;
   localparam FORTRESS_RGB_COLOR           = 6'b01_0101;
@@ -375,8 +375,8 @@ module tt_um_ds_missile_command(
       .clk(clk),
       .x(pix_x),
       .y(pix_y),
-      .pos_x(320),
-      .pos_y(240),
+      .pos_x(10'd320),
+      .pos_y(10'd240),
       .paint_banner(winner),
       .active(winner_banner_active),
       .R(winner_banner_R),
@@ -389,8 +389,8 @@ module tt_um_ds_missile_command(
       .clk(clk),
       .x(pix_x),
       .y(pix_y),
-      .pos_x(320),
-      .pos_y(240),
+      .pos_x(10'd320),
+      .pos_y(10'd240),
       .RGB_Color(START_BANNER_RGB_COLOR),
       .paint_banner(impacts == 2'b00),
       .active(start_banner_active),
@@ -404,8 +404,8 @@ module tt_um_ds_missile_command(
       .clk(clk),
       .x(pix_x),
       .y(pix_y),
-      .pos_x(320),
-      .pos_y(240),
+      .pos_x(10'd320),
+      .pos_y(10'd240),
       .RGB_Color(GAME_OVER_BANNER_RGB_COLOR),
       .paint_banner(game_over),
       .active(game_over_banner_active),
@@ -419,8 +419,8 @@ module tt_um_ds_missile_command(
       .clk(clk),
       .x(pix_x),
       .y(pix_y),
-      .pos_x(80),
-      .pos_y(30),
+      .pos_x(10'd80),
+      .pos_y(10'd30),
       .RGB_Color(GAME_OVER_BANNER_RGB_COLOR),
       .level(level),
       .paint_banner(1'b1),
@@ -547,8 +547,8 @@ module tt_um_ds_missile_command(
       level_launches        <= 5'b0_0000;
 
       level                 <= 4'b0000;
-      level_up              <= 0;
-      winner                <= 0;
+      level_up              <= 1'b0;
+      winner                <= 1'b0;
     end else begin
       impact_pulses =
           ({1'b0, (missile_impact[0] & ~missile_impact_prev[0])}) +
@@ -561,7 +561,7 @@ module tt_um_ds_missile_command(
       if (inp_start & ~inp_start_prev) begin
         if (game_over || winner) begin
           game_over             <= 1'b0;
-          winner                <= 0;
+          winner                <= 1'b0;
         end else begin
           if (impacts == 2'b00) begin
             impacts               <= 2'b11;
@@ -571,9 +571,9 @@ module tt_um_ds_missile_command(
             crosshair_y           <= 10'd240;
             counter               <= 16'd0;
             start_game_pending    <= 1'b1;
-            level_up              <= 0;
-            level_launches        <= 0;
-            level                 <= 0;
+            level_up              <= 1'b0;
+            level_launches        <= 5'b0_0000;
+            level                 <= 4'b0000;
             missile_lines_delay   <= 8'b1111_1111;
           end
         end
@@ -612,8 +612,8 @@ module tt_um_ds_missile_command(
         end
 
       if (level_up) begin
-        level_up <= 0;
-        level_launches <= 0;
+        level_up <= 1'b0;
+        level_launches <= 5'b0_0000;
         missile_lines_delay <= missile_lines_delay - LEVEL_DELAY_STEP;
         impacts <= 2'b11;
         if (level + 1'b1 > 4'd9) begin
