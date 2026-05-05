@@ -683,7 +683,7 @@ module tt_um_ds_missile_command(
             counter <= counter + 1'b1;
           end else begin
             counter <= 16'd0;
-            if (crosshair_x - 2'b11 > 5'd5) begin
+            if (crosshair_x - 2'b11 > 3'd5) begin
               crosshair_x <= crosshair_x - 2'b11;
             end
           end
