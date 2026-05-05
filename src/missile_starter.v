@@ -48,10 +48,10 @@ module missile_starter(
 
   always @(posedge clk) begin
     if (!rst_n) begin
-      m1_x   <= 0;
-      m22_x  <= 0;
-      m23_x  <= 0;
-      m33_x  <= 0;
+      m1_x   <= 10'd0;
+      m22_x  <= 10'd0;
+      m23_x  <= 10'd0;
+      m33_x  <= 10'd0;
     end else begin
       if (next > SCREEN_WIDTH) begin
         m1_x <= next - SCREEN_WIDTH;
@@ -89,50 +89,50 @@ module missile_starter(
   end
 
   always @(*) begin
-      m1_coefficient_x  = 0;
-      m22_coefficient_x = 0;
-      m23_coefficient_x = 0;
-      m33_coefficient_x = 0;
-      m1_coefficient_y  = 0;
-      m22_coefficient_y = 0;
-      m23_coefficient_y = 0;
-      m33_coefficient_y = 0;
+      m1_coefficient_x  = 4'd0;
+      m22_coefficient_x = 4'd0;
+      m23_coefficient_x = 4'd0;
+      m33_coefficient_x = 4'd0;
+      m1_coefficient_y  = 4'd0;
+      m22_coefficient_y = 4'd0;
+      m23_coefficient_y = 4'd0;
+      m33_coefficient_y = 4'd0;
 
       // Missile 1
-      if      (m1_x <= LEFT_LEFT_QUARTER)   begin m1_coefficient_x = 2; m1_coefficient_y = 3; end
-      else if (m1_x <= LEFT_QUARTER)        begin m1_coefficient_x = 1; m1_coefficient_y = 2; end
-      else if (m1_x <= LEFT_RIGHT_QUARTER)  begin m1_coefficient_x = 1; m1_coefficient_y = 3; end
-      else if (m1_x <= RIGHT_LEFT_QUARTER)  begin m1_coefficient_x = 0; m1_coefficient_y = 2; end
-      else if (m1_x <= RIGHT_QUARTER)       begin m1_coefficient_x = 1; m1_coefficient_y = 3; end
-      else if (m1_x <= RIGHT_RIGHT_QUARTER) begin m1_coefficient_x = 1; m1_coefficient_y = 2; end
-      else                                  begin m1_coefficient_x = 2; m1_coefficient_y = 3; end
+      if      (m1_x <= LEFT_LEFT_QUARTER)   begin m1_coefficient_x = 4'd2; m1_coefficient_y = 4'd3; end
+      else if (m1_x <= LEFT_QUARTER)        begin m1_coefficient_x = 4'd1; m1_coefficient_y = 4'd2; end
+      else if (m1_x <= LEFT_RIGHT_QUARTER)  begin m1_coefficient_x = 4'd1; m1_coefficient_y = 4'd3; end
+      else if (m1_x <= RIGHT_LEFT_QUARTER)  begin m1_coefficient_x = 4'd0; m1_coefficient_y = 4'd2; end
+      else if (m1_x <= RIGHT_QUARTER)       begin m1_coefficient_x = 4'd1; m1_coefficient_y = 4'd3; end
+      else if (m1_x <= RIGHT_RIGHT_QUARTER) begin m1_coefficient_x = 4'd1; m1_coefficient_y = 4'd2; end
+      else                                  begin m1_coefficient_x = 4'd2; m1_coefficient_y = 4'd3; end
 
       // Missile 2 of 2
-      if      (m22_x <= LEFT_LEFT_QUARTER)   begin m22_coefficient_x = 2; m22_coefficient_y = 3; end
-      else if (m22_x <= LEFT_QUARTER)        begin m22_coefficient_x = 1; m22_coefficient_y = 2; end
-      else if (m22_x <= LEFT_RIGHT_QUARTER)  begin m22_coefficient_x = 1; m22_coefficient_y = 3; end
-      else if (m22_x <= RIGHT_LEFT_QUARTER)  begin m22_coefficient_x = 0; m22_coefficient_y = 2; end
-      else if (m22_x <= RIGHT_QUARTER)       begin m22_coefficient_x = 1; m22_coefficient_y = 3; end
-      else if (m22_x <= RIGHT_RIGHT_QUARTER) begin m22_coefficient_x = 1; m22_coefficient_y = 2; end
-      else                                   begin m22_coefficient_x = 2; m22_coefficient_y = 3; end
+      if      (m22_x <= LEFT_LEFT_QUARTER)   begin m22_coefficient_x = 4'd2; m22_coefficient_y = 4'd3; end
+      else if (m22_x <= LEFT_QUARTER)        begin m22_coefficient_x = 4'd1; m22_coefficient_y = 4'd2; end
+      else if (m22_x <= LEFT_RIGHT_QUARTER)  begin m22_coefficient_x = 4'd1; m22_coefficient_y = 4'd3; end
+      else if (m22_x <= RIGHT_LEFT_QUARTER)  begin m22_coefficient_x = 4'd0; m22_coefficient_y = 4'd2; end
+      else if (m22_x <= RIGHT_QUARTER)       begin m22_coefficient_x = 4'd1; m22_coefficient_y = 4'd3; end
+      else if (m22_x <= RIGHT_RIGHT_QUARTER) begin m22_coefficient_x = 4'd1; m22_coefficient_y = 4'd2; end
+      else                                   begin m22_coefficient_x = 4'd2; m22_coefficient_y = 4'd3; end
 
       // Missile 2 of 3
-      if      (m23_x <= LEFT_LEFT_QUARTER)   begin m23_coefficient_x = 2; m23_coefficient_y = 3; end
-      else if (m23_x <= LEFT_QUARTER)        begin m23_coefficient_x = 1; m23_coefficient_y = 2; end
-      else if (m23_x <= LEFT_RIGHT_QUARTER)  begin m23_coefficient_x = 1; m23_coefficient_y = 3; end
-      else if (m23_x <= RIGHT_LEFT_QUARTER)  begin m23_coefficient_x = 0; m23_coefficient_y = 2; end
-      else if (m23_x <= RIGHT_QUARTER)       begin m23_coefficient_x = 1; m23_coefficient_y = 3; end
-      else if (m23_x <= RIGHT_RIGHT_QUARTER) begin m23_coefficient_x = 1; m23_coefficient_y = 2; end
-      else                                   begin m23_coefficient_x = 2; m23_coefficient_y = 3; end
+      if      (m23_x <= LEFT_LEFT_QUARTER)   begin m23_coefficient_x = 4'd2; m23_coefficient_y = 4'd3; end
+      else if (m23_x <= LEFT_QUARTER)        begin m23_coefficient_x = 4'd1; m23_coefficient_y = 4'd2; end
+      else if (m23_x <= LEFT_RIGHT_QUARTER)  begin m23_coefficient_x = 4'd1; m23_coefficient_y = 4'd3; end
+      else if (m23_x <= RIGHT_LEFT_QUARTER)  begin m23_coefficient_x = 4'd0; m23_coefficient_y = 4'd2; end
+      else if (m23_x <= RIGHT_QUARTER)       begin m23_coefficient_x = 4'd1; m23_coefficient_y = 4'd3; end
+      else if (m23_x <= RIGHT_RIGHT_QUARTER) begin m23_coefficient_x = 4'd1; m23_coefficient_y = 4'd2; end
+      else                                   begin m23_coefficient_x = 4'd2; m23_coefficient_y = 4'd3; end
 
       // Missile 3 of 3
-      if      (m33_x <= LEFT_LEFT_QUARTER)   begin m33_coefficient_x = 2; m33_coefficient_y = 3; end
-      else if (m33_x <= LEFT_QUARTER)        begin m33_coefficient_x = 1; m33_coefficient_y = 2; end
-      else if (m33_x <= LEFT_RIGHT_QUARTER)  begin m33_coefficient_x = 1; m33_coefficient_y = 3; end
-      else if (m33_x <= RIGHT_LEFT_QUARTER)  begin m33_coefficient_x = 0; m33_coefficient_y = 2; end
-      else if (m33_x <= RIGHT_QUARTER)       begin m33_coefficient_x = 1; m33_coefficient_y = 3; end
-      else if (m33_x <= RIGHT_RIGHT_QUARTER) begin m33_coefficient_x = 1; m33_coefficient_y = 2; end
-      else                                   begin m33_coefficient_x = 2; m33_coefficient_y = 3; end
+      if      (m33_x <= LEFT_LEFT_QUARTER)   begin m33_coefficient_x = 4'd2; m33_coefficient_y = 4'd3; end
+      else if (m33_x <= LEFT_QUARTER)        begin m33_coefficient_x = 4'd1; m33_coefficient_y = 4'd2; end
+      else if (m33_x <= LEFT_RIGHT_QUARTER)  begin m33_coefficient_x = 4'd1; m33_coefficient_y = 4'd3; end
+      else if (m33_x <= RIGHT_LEFT_QUARTER)  begin m33_coefficient_x = 4'd0; m33_coefficient_y = 4'd2; end
+      else if (m33_x <= RIGHT_QUARTER)       begin m33_coefficient_x = 4'd1; m33_coefficient_y = 4'd3; end
+      else if (m33_x <= RIGHT_RIGHT_QUARTER) begin m33_coefficient_x = 4'd1; m33_coefficient_y = 4'd2; end
+      else                                   begin m33_coefficient_x = 4'd2; m33_coefficient_y = 4'd3; end
   end
 
 

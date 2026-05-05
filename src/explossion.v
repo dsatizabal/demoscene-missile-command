@@ -17,8 +17,8 @@ module explosion (
     output reg [1:0]    B
 );
 
-  localparam [3:0]  STEPS_COUNT = 4'd6;
-  localparam [15:0] FRAMES_DELAY = 16'h0960;
+  localparam [3:0]  STEPS_COUNT   = 4'd6;
+  localparam [15:0] FRAMES_DELAY  = 16'h0960;
 
   reg [9:0]  my_x;
   reg [9:0]  my_y;
@@ -27,13 +27,13 @@ module explosion (
   reg [1:0]  direction;
   reg        explode;
 
-  reg [4:0] dx;
-  reg [4:0] dy;
-  wire [9:0] dx_raw = (x >= my_x) ? (x - my_x) : (my_x - x);
-  wire [9:0] dy_raw = (y >= my_y) ? (y - my_y) : (my_y - y);
-  reg [5:0] half_size;
-  reg [5:0] cut_size;
-  reg [5:0] row_limit;
+  reg   [4:0] dx;
+  reg   [4:0] dy;
+  wire  [9:0] dx_raw = (x >= my_x) ? (x - my_x) : (my_x - x);
+  wire  [9:0] dy_raw = (y >= my_y) ? (y - my_y) : (my_y - y);
+  reg   [5:0] half_size;
+  reg   [5:0] cut_size;
+  reg   [5:0] row_limit;
 
   always @(posedge lines_clk or negedge rst_n) begin
     if (!rst_n) begin
