@@ -555,7 +555,7 @@ module tt_um_ds_missile_command(
           ({1'b0, (missile_impact[1] & ~missile_impact_prev[1])}) +
           ({1'b0, (missile_impact[2] & ~missile_impact_prev[2])});
 
-      fire_pulse <= (impacts > 0) && inp_a && ~inp_a_prev;
+      fire_pulse <= (impacts > 2'b00) && inp_a && ~inp_a_prev;
       inp_a_prev <= inp_a;
 
       if (inp_start & ~inp_start_prev) begin
@@ -573,12 +573,11 @@ module tt_um_ds_missile_command(
             start_game_pending    <= 1'b1;
             level_up              <= 0;
             level_launches        <= 0;
-            impacts               <= 2'b11;
             level                 <= 0;
             missile_lines_delay   <= 8'b1111_1111;
           end
         end
-      end else if ((impacts > 0) && (impact_pulses != 2'b00)) begin
+      end else if ((impacts > 2'b00) && (impact_pulses != 2'b00)) begin
         if (impacts > impact_pulses) begin
           impacts <= impacts - impact_pulses;
         end else begin
@@ -599,13 +598,13 @@ module tt_um_ds_missile_command(
 
       missiles_gone_prev <= missiles_gone;
 
-      if (missile_fire_pulse > 0) begin
+      if (missile_fire_pulse > 4'd0) begin
         missile_fire_pulse <= missile_fire_pulse - 1'b1;
         if (missile_fire_pulse == 4'd1)
           missile_fire <= 3'b000;
       end
 
-      if ((impacts > 0) && (start_game_pending || (missiles_gone && !missiles_gone_prev))) begin
+      if ((impacts > 2'b00) && (start_game_pending || (missiles_gone && !missiles_gone_prev))) begin
         if (level_launches + missiles_in_flight >= MISSILES_PER_LEVEL) begin
           level_up <= 1'b1;
         end else begin
@@ -617,8 +616,8 @@ module tt_um_ds_missile_command(
         level_launches <= 0;
         missile_lines_delay <= missile_lines_delay - LEVEL_DELAY_STEP;
         impacts <= 2'b11;
-        if (level + 1'b1 > 9) begin
-          level <= 0;
+        if (level + 1'b1 > 4'd9) begin
+          level <= 4'b0000;
           missile_lines_delay <= 8'b1111_1111;
           winner <= 1'b1;
           impacts <= 2'b00;
@@ -663,7 +662,7 @@ module tt_um_ds_missile_command(
             counter <= counter + 1'b1;
           end else begin
             counter <= 16'd0;
-            if (crosshair_y - 2'b11 > 0)
+            if (crosshair_y - 2'b11 > 10'd0)
               crosshair_y <= crosshair_y - 2'b11;
           end
         end
